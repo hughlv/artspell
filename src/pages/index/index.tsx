@@ -43,7 +43,7 @@ function Index() {
     } else if (type === 'base') {
       normBase = ''; // 参考图路径不需要添加分类
     }
-    return `https://d2q0omy5xtz2zh.cloudfront.net/0-7-0/mj/${normBase}${normName}.webp`;
+    return `http://assets.csn.chat/0-7-0/mj/${normBase}${normName}.webp`;
   };
 
   const handleClick = function (item: string, list: string[], setList: any) {
@@ -243,7 +243,7 @@ function Index() {
                 console.log('Prompt clicked', res);
                 Taro.showToast({
                   title:
-                    '已经成功将咒语拷贝到剪贴板，请到 Midjourney 中粘贴运行',
+                    '已成功拷贝咒语',
                   icon: 'success',
                   duration: 2000,
                 });

@@ -4,7 +4,28 @@ module.exports = {
   },
   defineConstants: {
   },
-  mini: {},
+  mini: {
+    webpackChain(chain) {
+      chain.optimization.splitChunks({
+        chunks: 'all',
+        cacheGroups: {
+          vendors: {
+            name: 'vendors',
+            test: /[\\/]node_modules[\\/]/,
+            priority: -10,
+            chunks: 'initial',
+          },
+          default: {
+            name: 'main',
+            minChunks: 2,
+            priority: -20,
+            reuseExistingChunk: true,
+          },
+        },
+      });
+      chain.optimization.usedExports(true);
+    },
+  },
   h5: {
     /**
      * WebpackChain 插件配置
