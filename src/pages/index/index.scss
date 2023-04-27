@@ -18,12 +18,9 @@
   align-items: center;
   font-size: 24rpx;
   margin: 6rpx 4rpx;
-  padding: 5rpx;
-  border-radius: 5rpx;
+  border-radius: 8rpx;
   background-color: white;
-  border-width: 1rpx;
-  font-size: small;
-  font-weight: 400;
+  font-weight: 500;
 }
 
 .option-grid {
@@ -31,43 +28,62 @@
   flex-direction: row;
   justify-content: flex-start;
   align-items: flex-start;
+  width: 100%;
+  border: none;
 }
 
 .option-box {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  justify-content: space-between;
   padding: 4rpx;
   margin: 4rpx 0;
-  width: 100%;
+}
+
+.option-box-h {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4rpx 0;
+  margin: 4rpx 0;
 }
 
 .option-cell {
   box-shadow: none;
-  border: 1rpx solid #e5e5e5;
-}
-
-.option {
-  padding: 20rpx 4rpx;
-}
-
-.prompt-zone {
-  display: flex-col;
-  justify-content: center;
-  align-items: center;
-  font-size: 24rpx;
-  padding: 12rpx 0 0 0;
-  color: white;
-  height: 160rpx;
-  background-color: #2250d0;
+  border: none;
 }
 
 .option-title {
   display: block;
   text-align: center;
-  padding: 14rpx 0;
+  padding: 12px 0;
   font-weight: 400;
+}
+
+.option {
+  border: none;
+}
+
+/* 选中状态 */
+.sel-option {
+  color: white;
+  font-weight: 400;
+  border-radius: 8px;
+  background: #2250d0;
+}
+
+.prompt-zone {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  font-size: 24rpx;
+  padding: 4px;
+  background-color: #2250d0;
+  color: white;
+  border-radius: 8px;
+  height: 380rpx;
 }
 
 .title {
@@ -86,32 +102,29 @@
 .content {
   font-size: small;
   font-weight: 300;
-  padding: 4rpx 8rpx;
-}
-
-.btn {
-  display: block;
-  width: 200px;
-  margin-right: 20px;
-  margin-bottom: 20px;
-}
-
-.sel-grid {
-  color:brown;
-  width: 100%;
-  margin: 3;
-  border: 4rpx;
-  border-color: brown;
-  background-color: goldenrod;
+  text-align: center;
+  margin: 4px 2px;
 }
 
 .nut-collapse-item__content {
-  width: 100%;
+  border: none;
 }
 
-.nut-collapse-item__content-text {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  padding: 10rpx;
+.nut-grid-item__content {
+  border: 1px solid white; /* 避免选中时因为边框宽度变化而晃动 */
+  border-radius: 8px;
+  background: transparent;
+  padding: 2rpx;
+}
+
+.nut-input {
+  padding: 14px 4px;
+}
+
+.nut-range-container {
+  min-height: 60px;
+}
+
+.nut-textarea {
+  padding: 0;
 }
