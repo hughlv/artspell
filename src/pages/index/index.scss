@@ -1,7 +1,7 @@
 .main {
   display: flex;
   flex-direction: column;
-  background-color: #f5f5f5;
+  background-color: #f3f3f3;
   height: 100vh;
 }
 
@@ -17,8 +17,9 @@
   justify-content: center;
   align-items: center;
   font-size: 24rpx;
-  margin: 6rpx 4rpx;
-  border-radius: 8rpx;
+  margin: 8px 4px;
+  overflow: hidden;
+  border-radius: 8px;
   background-color: white;
   font-weight: 500;
 }
@@ -62,13 +63,16 @@
 }
 
 .option {
+  padding: 1px 0;
   border: none;
 }
 
 /* 选中状态 */
 .sel-option {
+  padding: 1px 0;
   color: white;
   font-weight: 400;
+  border: none;
   border-radius: 8px;
   background: #2250d0;
 }
@@ -78,12 +82,9 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  font-size: 24rpx;
-  padding: 4px;
+  padding: 2px 0;
   background-color: #2250d0;
   color: white;
-  border-radius: 8px;
-  height: 380rpx;
 }
 
 .title {
@@ -95,15 +96,15 @@
 
 .subtitle {
   display: block;
+  text-align: center;
   font-size: small;
   font-weight: 400;
+  margin: 4px 0;
 }
 
 .content {
   font-size: small;
-  font-weight: 300;
-  text-align: center;
-  margin: 4px 2px;
+  font-weight: 400;
 }
 
 .nut-collapse-item__content {
@@ -111,10 +112,9 @@
 }
 
 .nut-grid-item__content {
-  border: 1px solid white; /* 避免选中时因为边框宽度变化而晃动 */
+  border: none;
   border-radius: 8px;
   background: transparent;
-  padding: 2rpx;
 }
 
 .nut-input {
@@ -127,4 +127,8 @@
 
 .nut-textarea {
   padding: 0;
+}
+
+.nut-textarea__textarea {
+  padding: 2px 4px;
 }

@@ -1,0 +1,56 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+  background-color: #f3f3f3;
+}
+
+.work {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  color: white;
+  height: 100%;
+}
+
+.overlay {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+}
+
+.prompt {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: auto;
+  margin-bottom: auto;
+  border-radius: 8px;
+  background-color: var(--nutui-brand-color);
+}
+
+.prompt-title {
+  font-size: 16px;
+  font-weight: 500;
+  padding: 18px 2px 8px 2px;
+  color: white;
+}
+
+.prompt-content {
+  font-size: 14px;
+  font-weight: 400;
+  padding: 8px;
+  color: white;
+}
+
+.prompt-footer {
+  font-size: 12px;
+  font-weight: 400;
+  padding: 8px 2px 18px 2px;
+  color: lightgray;
+}

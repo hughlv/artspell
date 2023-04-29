@@ -1,10 +1,8 @@
 import { useEffect, useState } from 'react';
 import { View } from '@tarojs/components';
 import {
-  Cell,
   Collapse,
   CollapseItem,
-  ConfigProvider,
   Divider,
   Grid,
   GridItem,
@@ -81,268 +79,255 @@ function Index() {
     setPrompt(prompt);
   };
 
-  const ticosTheme = {
-    nutuiBrandColor: '#2250d0',
-    nutuiBrandColorStart: '#2250d0',
-    nutuiBrandColorEnd: '#92c0ff',
-    nutuiRangeBgColor: '#92c0ff',
-    nutuiRangeBgColorTick: '#92c0ff',
-    nutuiDividerTextColor: '#ebedf0',
-  };
-
   return (
-    <ConfigProvider theme={ticosTheme}>
-      <View className="main">
-        <View className="option-container">
-          <View className="title">MJ咒语发生器</View>
-          <View className="content">
-            仅需简单点选风格和选项，即可快速构建符合你需求的MJ咒语。
-          </View>
-          <Collapse activeName={['base', 'detail', 'artist', 'option']}>
-            <CollapseItem
-              title="参考图"
-              subTitle='切换预览效果'
-              className="option-zone"
-              name="base"
-            >
-              <Grid className="option-grid" columnNum={3}>
-                {data.bases.map((item, index) => {
-                  return (
-                    <GridItem
-                      key={index}
-                      data-base={item}
-                      onClick={e => {
-                        e.currentTarget.dataset.base &&
-                          setBase(e.currentTarget.dataset.base);
-                      }}
-                      className={
-                        base.includes(item) ? 'sel-option' : 'option'
-                      }
-                    >
-                      <Image
-                        src={buildImageUrl(item, 'base')}
-                        width="90"
-                        height="90"
-                        radius={9}
-                      />
-                      <View className="option-title">{item}</View>
-                    </GridItem>
-                  );
-                })}
-              </Grid>
-            </CollapseItem>
-            <CollapseItem
-              title="艺术风格"
-              subTitle="可选择多种风格"
-              className="option-zone"
-              name="detail"
-            >
-              <Grid className="option-grid" columnNum={3}>
-                {data.details.map((item, index) => {
-                  return (
-                    <GridItem
-                      key={index}
-                      data-detail={item}
-                      className={
-                        details.includes(item) ? 'sel-option' : 'option'
-                      }
-                      onClick={e => {
-                        e.currentTarget.dataset.detail &&
-                          handleClick(
-                            e.currentTarget.dataset.detail,
-                            details,
-                            setDetails
-                          );
-                      }}
-                    >
-                      <Image
-                        src={buildImageUrl(item, 'style')}
-                        width="90"
-                        height="90"
-                        radius={9}
-                      />
-                      <View className="option-title">{item}</View>
-                    </GridItem>
-                  );
-                })}
-              </Grid>
-            </CollapseItem>
-            <CollapseItem
-              title="艺术家"
-              subTitle="可同时选择多位艺术家"
-              className="option-zone"
-              name="artist"
-            >
-              <Grid className="option-grid" columnNum={3}>
-                {data.artists.map((item, index) => {
-                  return (
-                    <GridItem
-                      key={index}
-                      data-artist={item}
-                      className={
-                        artists.includes(item) ? 'sel-option' : 'option'
-                      }
-                      onClick={e => {
-                        e.currentTarget.dataset.artist &&
-                          handleClick(
-                            e.currentTarget.dataset.artist,
-                            artists,
-                            setArtists
-                          );
-                      }}
-                    >
-                      <Image
-                        src={buildImageUrl(item, 'artist')}
-                        width="90"
-                        height="90"
-                        radius={9}
-                      />
-                      <View className="option-title">{item}</View>
-                    </GridItem>
-                  );
-                })}
-              </Grid>
-            </CollapseItem>
-            <CollapseItem
-              title="基本参数"
-              className="option-zone"
-              name="option"
-            >
-              <View className="option-box-h">
-                <View className="option-title">版本</View>
-                <Radio.RadioGroup
-                  direction="horizontal"
-                  options={[
-                    // { label: '1', value: '1' },
-                    // { label: '2', value: '2' },
-                    // { label: '3', value: '3' },
-                    // { label: '4', value: '4' },
-                    { label: '5', value: '5' },
-                    { label: '5b', value: '5b' },
-                  ]}
-                  value={version || '5'}
-                  onChange={e => setVersion(e.toString())}
-                ></Radio.RadioGroup>
-              </View>
-              <Divider />
-              <View className="option-box-h" onClick={() => setIsAspectRatioVisible(!isAspectRatioVisible)}>
-                <View>长宽比</View>
-                <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
-                  <View>{aspectRatio ? aspectRatio : '1:1'}</View>
-                  <Icon name="rect-right" />
-                </View>
-                <Picker
-                  isVisible={isAspectRatioVisible}
-                  listData={aspectRatioList}
-                  onConfirm={values => setAspectRatio(values[0].toString())}
-                  onClose={() => setIsAspectRatioVisible(false)}
-                />
-              </View>
-              <Divider />
-              <View className="option-box">
-                <View className="option-title">图片质量（数字越大质量越好）</View>
-                <Radio.RadioGroup
-                  className='option'
-                  direction="horizontal"
-                  options={[
-                    { label: '0.25', value: '0.25' },
-                    { label: '0.5', value: '0.5' },
-                    { label: '1', value: '1' },
-                    { label: '2', value: '2' },
-                    { label: '5', value: '5' },
-                  ]}
-                  value={quality || '1'}
-                  onChange={e => setQuality(e.toString())}
-                ></Radio.RadioGroup>
-              </View>
-              <Divider />
-              <View className="option-box">
-                <View className="option-title">混乱（数字越大效果越强）</View>
-                <Range
-                  className="option"
-                  min={0}
-                  max={100}
-                  hiddenRange
-                  modelValue={chaos ? Number(chaos) : 0}
-                  onChange={v => setChaos(v.toString())}
-                />
-              </View>
-              <Divider />
-              <View className="option-box">
-                <View className="option-title">
-                  风格化：数字越大风格化越明显
-                </View>
-                <Range
-                  className="option"
-                  min={0}
-                  max={1000}
-                  hiddenRange
-                  modelValue={stylize ? Number(stylize.split(' ').pop()) : 100}
-                  onChange={v => setStylize(v.toString())}
-                />
-              </View>
-              <Divider />
-              <View
-                className="option-box-h"
-                style={{ flexDirection: 'row', padding: '4rpx' }}
-              >
-                <View className="option-title">创建为可拼接的纹理</View>
-                <Switch checked={tile} onChange={v => setTile(v)} />
-              </View>
-              <Divider />
-              {version && Number(version.split(' ').pop()) <= 3 && (
-                <View className="option-box-h">
-                  <View className="option-title">生成短视频</View>
-                  <Switch checked={video} onChange={v => setVideo(v)} />
-                  <Divider />
-                </View>
-              )}
-              <View className="option-box-h">
-                <Input
-                  label="去除内容"
-                  className="option"
-                  name="no"
-                  placeholder="如输入 sky 会去除天空"
-                  defaultValue={no ? Number(no.split(' ').pop()) : ''}
-                  onChange={v => setNo(v)}
-                />
-              </View>
-            </CollapseItem>
-          </Collapse>
-          <View className="content" style={{ textAlign: 'center'}}><a href="https://github.com/hughlv/artspell/"><Icon name="github" /></a></View>
+    <View className="main">
+      <View className="option-container">
+        <View className="title">MJ咒语发生器</View>
+        <View className="subtitle">
+          仅需简单点选风格和选项，即可快速构建符合你需求的MJ咒语。
         </View>
-        <View className="prompt-zone">
-          <View className="content">请输入您想创作的内容：</View>
-          <Input
-            name="input"
-            defaultValue={input}
-            onChange={val => setInput(val)}
-          />
-          <View className="content">
-            点击下列区域以拷贝咒语并到 Midjourney 中运行：
-          </View>
-          <View
-            className="content"
-            style={{ width: '100%', textAlign: 'center' }}
-            onClick={() => {
-              Taro.setClipboardData({
-                data: prompt,
-                success: function (res) {
-                  console.log('Prompt clicked', res);
-                  Taro.showToast({
-                    title: '已成功拷贝咒语',
-                    icon: 'success',
-                    duration: 2000,
-                  });
-                },
-              });
-            }}
+        <Collapse activeName={['detail', 'option']}>
+          <CollapseItem
+            title="参考图"
+            subTitle="切换预览效果"
+            className="option-zone"
+            name="base"
           >
-            <TextArea className='content' readonly defaultValue={prompt} />
-          </View>
+            <Grid className="option-grid" columnNum={3}>
+              {data.bases.map((item, index) => {
+                return (
+                  <GridItem
+                    key={index}
+                    data-base={item}
+                    onClick={e => {
+                      e.currentTarget.dataset.base &&
+                        setBase(e.currentTarget.dataset.base);
+                    }}
+                    className={base.includes(item) ? 'sel-option' : 'option'}
+                  >
+                    <Image
+                      src={buildImageUrl(item, 'base')}
+                      width="90"
+                      height="90"
+                      radius={9}
+                    />
+                    <View className="option-title">{item}</View>
+                  </GridItem>
+                );
+              })}
+            </Grid>
+          </CollapseItem>
+          <CollapseItem
+            title="艺术风格"
+            subTitle="可选择多种风格"
+            className="option-zone"
+            name="detail"
+          >
+            <Grid className="option-grid" columnNum={3}>
+              {data.details.map((item, index) => {
+                return (
+                  <GridItem
+                    key={index}
+                    data-detail={item}
+                    className={details.includes(item) ? 'sel-option' : 'option'}
+                    onClick={e => {
+                      e.currentTarget.dataset.detail &&
+                        handleClick(
+                          e.currentTarget.dataset.detail,
+                          details,
+                          setDetails
+                        );
+                    }}
+                  >
+                    <Image
+                      src={buildImageUrl(item, 'style')}
+                      width="90"
+                      height="90"
+                      radius={9}
+                    />
+                    <View className="option-title">{item}</View>
+                  </GridItem>
+                );
+              })}
+            </Grid>
+          </CollapseItem>
+          <CollapseItem
+            title="艺术家"
+            subTitle="可同时选择多位艺术家"
+            className="option-zone"
+            name="artist"
+          >
+            <Grid className="option-grid" columnNum={3}>
+              {data.artists.map((item, index) => {
+                return (
+                  <GridItem
+                    key={index}
+                    data-artist={item}
+                    className={artists.includes(item) ? 'sel-option' : 'option'}
+                    onClick={e => {
+                      e.currentTarget.dataset.artist &&
+                        handleClick(
+                          e.currentTarget.dataset.artist,
+                          artists,
+                          setArtists
+                        );
+                    }}
+                  >
+                    <Image
+                      src={buildImageUrl(item, 'artist')}
+                      width="90"
+                      height="90"
+                      radius={9}
+                    />
+                    <View className="option-title">{item}</View>
+                  </GridItem>
+                );
+              })}
+            </Grid>
+          </CollapseItem>
+          <CollapseItem title="基本参数" className="option-zone" name="option">
+            <View className="option-box-h">
+              <View className="option-title">版本</View>
+              <Radio.RadioGroup
+                direction="horizontal"
+                options={[
+                  // { label: '1', value: '1' },
+                  // { label: '2', value: '2' },
+                  // { label: '3', value: '3' },
+                  // { label: '4', value: '4' },
+                  { label: '5', value: '5' },
+                  { label: '5b', value: '5b' },
+                ]}
+                value={version || '5'}
+                onChange={e => setVersion(e.toString())}
+              ></Radio.RadioGroup>
+            </View>
+            <Divider />
+            <View
+              className="option-box-h"
+              onClick={() => setIsAspectRatioVisible(!isAspectRatioVisible)}
+            >
+              <View>长宽比</View>
+              <View
+                style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                }}
+              >
+                <View>{aspectRatio ? aspectRatio : '1:1'}</View>
+                <Icon name="rect-right" />
+              </View>
+              <Picker
+                isVisible={isAspectRatioVisible}
+                listData={aspectRatioList}
+                onConfirm={values => setAspectRatio(values[0].toString())}
+                onClose={() => setIsAspectRatioVisible(false)}
+              />
+            </View>
+            <Divider />
+            <View className="option-box">
+              <View className="option-title">图片质量（数字越大质量越好）</View>
+              <Radio.RadioGroup
+                className="option"
+                direction="horizontal"
+                options={[
+                  { label: '0.25', value: '0.25' },
+                  { label: '0.5', value: '0.5' },
+                  { label: '1', value: '1' },
+                  { label: '2', value: '2' },
+                  { label: '5', value: '5' },
+                ]}
+                value={quality || '1'}
+                onChange={e => setQuality(e.toString())}
+              ></Radio.RadioGroup>
+            </View>
+            <Divider />
+            <View className="option-box">
+              <View className="option-title">混乱（数字越大效果越强）</View>
+              <Range
+                className="option"
+                min={0}
+                max={100}
+                hiddenRange
+                modelValue={chaos ? Number(chaos) : 0}
+                onChange={v => setChaos(v.toString())}
+              />
+            </View>
+            <Divider />
+            <View className="option-box">
+              <View className="option-title">风格化：数字越大风格化越明显</View>
+              <Range
+                className="option"
+                min={0}
+                max={1000}
+                hiddenRange
+                modelValue={stylize ? Number(stylize.split(' ').pop()) : 100}
+                onChange={v => setStylize(v.toString())}
+              />
+            </View>
+            <Divider />
+            <View
+              className="option-box-h"
+              style={{ flexDirection: 'row', padding: '4rpx' }}
+            >
+              <View className="option-title">创建为可拼接的纹理</View>
+              <Switch checked={tile} onChange={v => setTile(v)} />
+            </View>
+            <Divider />
+            {version && Number(version.split(' ').pop()) <= 3 && (
+              <View className="option-box-h">
+                <View className="option-title">生成短视频</View>
+                <Switch checked={video} onChange={v => setVideo(v)} />
+                <Divider />
+              </View>
+            )}
+            <View className="option-box-h">
+              <Input
+                label="去除内容"
+                className="option"
+                name="no"
+                placeholder="如输入 sky 会去除天空"
+                defaultValue={no ? Number(no.split(' ').pop()) : ''}
+                onChange={v => setNo(v)}
+              />
+            </View>
+          </CollapseItem>
+        </Collapse>
+      </View>
+      <View className="prompt-zone">
+        <View className="subtitle">请输入您想创作的内容</View>
+        <TextArea
+          className="content"
+          style={{ height: '60px' }}
+          defaultValue={input}
+          onChange={val => setInput(val)}
+        />
+        <View className="subtitle">
+          点击以下区域以拷贝咒语并到 Midjourney 中运行
+        </View>
+        <View
+          style={{ width: '100%', padding: '0', margin: '0' }}
+          onClick={() => {
+            Taro.setClipboardData({
+              data: prompt,
+              success: function () {
+                Taro.showToast({
+                  title: '已成功拷贝咒语',
+                });
+              },
+            });
+          }}
+        >
+          <TextArea
+            className="content"
+            style={{ height: '70px', margin: '0' }}
+            readonly
+            defaultValue={prompt}
+          />
         </View>
       </View>
-    </ConfigProvider>
+    </View>
   );
 }
 

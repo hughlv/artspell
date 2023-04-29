@@ -1,3 +1,5 @@
+const path = require('path');
+
 const config = {
   projectName: 'artspell',
   date: '2023-4-24',

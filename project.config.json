@@ -1,6 +1,6 @@
 {
   "miniprogramRoot": "./dist",
-  "projectname": "mage",
+  "projectname": "artspell",
   "description": "Prompts Builder",
   "appid": "touristappid",
   "setting": {

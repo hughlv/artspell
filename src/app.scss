@@ -1,2 +1,8 @@
-$primary-color: #2250d0;
-$primary-color-end: #82c0ff;
+:root, page {
+  --nutui-brand-color: #2250d0;
+  --nutui-brand-color-start: #2250d0;
+  --nutui-brand-color-end: #92c0ff;
+  --nutui-range-bg-color: #92c0ff;
+  --nutui-range-bg-color-tick: #92c0ff;
+  --nutui-divider-text-color: #ebedf0;
+}
