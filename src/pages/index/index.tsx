@@ -16,8 +16,10 @@ import {
   TextArea,
 } from '@nutui/nutui-react-taro';
 import './index.scss';
-import data, { aspectRatioList } from '../../../data/mj';
+import { aspectRatioList } from '../../../data/mj';
 import Taro from '@tarojs/taro';
+
+const config = Taro.getStorageSync('config');
 
 function Index() {
   const [base, setBase] = useState<string>('landscape');
@@ -79,6 +81,10 @@ function Index() {
     setPrompt(prompt);
   };
 
+  if (!config) {
+    return <>Failed loading remote config.</>
+  }
+
   return (
     <View className="main">
       <View className="option-container">
@@ -86,7 +92,7 @@ function Index() {
         <View className="subtitle">
           仅需简单点选风格和选项，即可快速构建符合你需求的MJ咒语。
         </View>
-        <Collapse activeName={['detail', 'option']}>
+        <Collapse activeName={['base', 'detail', 'option']}>
           <CollapseItem
             title="参考图"
             subTitle="切换预览效果"
@@ -94,7 +100,7 @@ function Index() {
             name="base"
           >
             <Grid className="option-grid" columnNum={3}>
-              {data.bases.map((item, index) => {
+              {config.bases.map((item, index) => {
                 return (
                   <GridItem
                     key={index}
@@ -124,7 +130,7 @@ function Index() {
             name="detail"
           >
             <Grid className="option-grid" columnNum={3}>
-              {data.details.map((item, index) => {
+              {config.details.map((item, index) => {
                 return (
                   <GridItem
                     key={index}
@@ -158,7 +164,7 @@ function Index() {
             name="artist"
           >
             <Grid className="option-grid" columnNum={3}>
-              {data.artists.map((item, index) => {
+              {config.artists.map((item, index) => {
                 return (
                   <GridItem
                     key={index}
