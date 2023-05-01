@@ -24,11 +24,15 @@ const config = Taro.getStorageSync('config');
 function Index() {
   const [base, setBase] = useState<string>('landscape');
   const [input, setInput] = useState<string>(
-    'Beautiful woman on a beach in the Maldives, model, stunning, beach, serene, tropical, travel photography postcard style, hyper-detailed and realistic, film simulation, 8k'
+    '在马尔代夫海滩上的中国帅气小伙'
   );
   const [artists, setArtists] = useState<string[]>([]);
   const [details, setDetails] = useState<string[]>([]);
   const [no, setNo] = useState<string>(''); // https://docs.midjourney.com/docs/multi-prompts
+  const [realism, setRealism] = useState<boolean>(false);
+  const [portrait, setPortrait] = useState<boolean>(false);
+  const [cinematic, setCinematic] = useState<boolean>(false); // 电影级超高清3D渲染
+  const [logo, setLogo] = useState<boolean>(false);
   const [version, setVersion] = useState<string>('');
   const [quality, setQuality] = useState<string>('');
   const [chaos, setChaos] = useState<string>(''); // https://docs.midjourney.com/docs/chaos
@@ -78,6 +82,10 @@ function Index() {
     if (video) prompt += ' --video';
     if (version) prompt += ` --v ${version}`;
     if (aspectRatio) prompt += ` --ar ${aspectRatio}`;
+    if (realism) prompt += `,ultra realism,ultra detailed,4k `; // 高清写实
+    if (portrait) prompt += `model full body portrait, full length, photo, photorealistic, 4k, hd, `; // 人物特写
+    if (logo) prompt += `logo vector, simple, flat, 2d, low detail, smooth, plain, minimalism design, by Paul Rand --no realistic photo details, shadows `;
+    if (cinematic) prompt += `Epic beautiful scene, cinematic, post production, depth of field, cinema photography, cinema, color grading, professional color grading, 55 mm lens, Exquisite detail, award winning photography, realistic photography, hyper realistic, unreal engine, realistic lens flare, real lighting, inscriptions, hyper realistic, 8k, detailed, photography, Cinematic Lighting, Studio Lighting, Beautiful Lighting, Accent Lighting, Global Illumination, Screen Space Global Illumination, Ray Tracing Global Illumination, Optics, Scattering, Glowing, Shadows, Rough, Shimmering, Ray Tracing Reflections, Lumen Reflections, Screen Space Reflections, Diffraction Grading, GB Displacement, Scan Lines, Ray Traced, Ray Tracing Ambient Occlusion,Anti - Aliasing, FKAA, TXAA, RTX, SSAO, Shaders, OpenGL - Shaders, GLSL - Shaders,Post Processing, Post - Production, Cel Shading, Tone Mapping, CGI, VFX, SFX, insanely detailed and intricate, elegant, hyper realistic, super detailed, 8k --v 5 --q 2 --s 250 `;
     setPrompt(prompt);
   };
 
@@ -92,7 +100,7 @@ function Index() {
         <View className="subtitle">
           仅需简单点选风格和选项，即可快速构建符合你需求的MJ咒语。
         </View>
-        <Collapse activeName={['base', 'detail', 'option']}>
+        <Collapse activeName={['base', 'detail', 'modifier']} icon="rect-down" >
           <CollapseItem
             title="参考图"
             subTitle="切换预览效果"
@@ -274,9 +282,7 @@ function Index() {
             </View>
             <Divider />
             <View
-              className="option-box-h"
-              style={{ flexDirection: 'row', padding: '4rpx' }}
-            >
+              className="option-box-h">
               <View className="option-title">创建为可拼接的纹理</View>
               <Switch checked={tile} onChange={v => setTile(v)} />
             </View>
@@ -297,6 +303,27 @@ function Index() {
                 defaultValue={no ? Number(no.split(' ').pop()) : ''}
                 onChange={v => setNo(v)}
               />
+            </View>
+          </CollapseItem>
+          <CollapseItem title="常用修饰词" subTitle="建议只选一个" className="option-zone" name="modifier">
+            <View className="option-box-h">
+              <View className="option-title">高清写实</View>
+              <Switch checked={realism} onChange={v => setRealism(v)} />
+            </View>
+            <Divider />
+            <View className="option-box-h">
+              <View className="option-title">人物特写</View>
+              <Switch checked={portrait} onChange={v => setPortrait(v)} />
+            </View>
+            <Divider />
+            <View className="option-box-h">
+              <View className="option-title">Logo设计 - 平面极简风格</View>
+              <Switch checked={logo} onChange={v => setLogo(v)} />
+            </View>
+            <Divider />
+            <View className="option-box-h">
+              <View className="option-title">电影级超高清3D渲染</View>
+              <Switch checked={cinematic} onChange={v => setCinematic(v)} />
             </View>
           </CollapseItem>
         </Collapse>
