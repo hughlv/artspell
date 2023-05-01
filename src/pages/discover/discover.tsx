@@ -15,7 +15,7 @@ const config = Taro.getStorageSync('config');
 function Discover() {
   const [showOverlay, setShowOverlay] = useState(false);
   const [prompt, setPrompt] = useState('');
-  const [category, setCategory] = useState('design');
+  const [category, setCategory] = useState('art');
 
   const categories = [
     {
