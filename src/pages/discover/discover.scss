@@ -36,26 +36,26 @@
   margin-top: auto;
   margin-bottom: auto;
   border-radius: 8px;
-  background-color: var(--nutui-brand-color);
+  background-color: white;
 }
 
 .prompt-title {
   font-size: 16px;
   font-weight: 500;
   padding: 14px 2px 4px 2px;
-  color: white;
+  color: var(--nutui-brand-color);
 }
 
 .prompt-content {
   font-size: 14px;
   font-weight: 400;
   padding: 8px;
-  color: white;
+  color: var(--nutui-brand-color);
 }
 
 .prompt-footer {
   font-size: 14px;
   font-weight: 400;
   padding: 8px 2px 18px 2px;
-  color: lightgray;
+  color: darkgray;
 }

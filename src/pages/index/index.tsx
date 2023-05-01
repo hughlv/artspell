@@ -24,7 +24,7 @@ const config = Taro.getStorageSync('config');
 function Index() {
   const [base, setBase] = useState<string>('landscape');
   const [input, setInput] = useState<string>(
-    '在马尔代夫海滩上的中国帅气小伙'
+    'A beautiful Chinese dog on Maldives beach'
   );
   const [artists, setArtists] = useState<string[]>([]);
   const [details, setDetails] = useState<string[]>([]);

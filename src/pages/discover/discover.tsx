@@ -4,8 +4,6 @@ import {
   Icon,
   Image,
   Overlay,
-  Swiper,
-  SwiperItem,
   Tabs,
 } from '@nutui/nutui-react-taro';
 import { useState } from 'react';
@@ -18,26 +16,28 @@ function Discover() {
   const [showOverlay, setShowOverlay] = useState(false);
   const [prompt, setPrompt] = useState('');
   const [category, setCategory] = useState('design');
+
   const categories = [
-    {
-      title: '设计',
-      category: 'design',
-      icon: 'heart1',
-    },
     {
       title: '艺术',
       category: 'art',
       icon: 'photograph',
     },
+    {
+      title: '设计',
+      category: 'design',
+      icon: 'heart1',
+    },
   ];
   const buildImageUrl = function (file: string, type: string) {
-    return `http://assets.csn.chat/discover/${type}/${file}`;
+    return `http://assets.csn.chat/discover/${type}/${file}?1024`;
   };
+
   return (
     <View className="main">
       <Tabs
         value={category}
-        type="smile"
+        autoHeight
         titleNode={() => {
           return categories.map(item => (
             <div
@@ -46,32 +46,29 @@ function Discover() {
                 category === item.category ? 'active' : ''
               }`}
               key={item.category}
+              style={{ margin: '2px 4px' }}
             >
               {item.icon && <Icon name={item.icon} />}
-              <span className="nut-tabs__titles-item__text">{item.title}</span>
+              <span className="nut-tabs__titles-item__text" style={{ margin: '0 2px' }}>{item.title}</span>
               <span className="nut-tabs__titles-item__line" />
             </div>
           ));
         }}
-      ></Tabs>
-      <Swiper
-        paginationVisible={false}
-        loop={false}
-        isPreventDefault={false}
-        initPage={categories.findIndex(obj => obj.category === category)}
-        onChange={e => {
-          setCategory(categories[e].category);
-        }}
       >
         {categories.map(categoryItem => (
-          <SwiperItem title={categoryItem.title} key={categoryItem.category}>
+          <Tabs.TabPane
+            title={categoryItem.title}
+            paneKey={categoryItem.category}
+          >
             {(categoryItem.category === 'design'
               ? config.designs
               : config.arts
             ).map((configItem, index) => {
               return (
                 <View className="work" key={index}>
-                  {configItem.text && <View className="work-title">{configItem.text}</View>}
+                  {configItem.text && (
+                    <View className="work-title">{configItem.text}</View>
+                  )}
                   <Image
                     onClick={() => {
                       setShowOverlay(true);
@@ -89,9 +86,9 @@ function Discover() {
                 </View>
               );
             })}
-          </SwiperItem>
+          </Tabs.TabPane>
         ))}
-      </Swiper>
+      </Tabs>
       <Overlay
         visible={showOverlay}
         onClick={() => {

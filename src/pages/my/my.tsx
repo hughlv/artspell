@@ -15,7 +15,7 @@ function My() {
         <View className="content" style={{ textAlign: 'center'}}><a href="https://github.com/hughlv/artspell/">https://github.com/hughlv/artspell/</a></View>
       </View>
       <Image src="https://assets.csn.chat/qrcode_for_gh_1f3a52321def_258.jpg" fit="contain" width="150px" height="150px" />
-      <Text>欢迎关注常识笔记</Text>
+      <Text className="text">欢迎关注常识笔记</Text>
     </View>
   )
 }
