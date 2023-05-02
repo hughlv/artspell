@@ -19,8 +19,6 @@ import './index.scss';
 import { aspectRatioList } from '../../../data/mj';
 import Taro from '@tarojs/taro';
 
-const config = Taro.getStorageSync('config');
-
 function Index() {
   const [base, setBase] = useState<string>('landscape');
   const [input, setInput] = useState<string>(
@@ -44,6 +42,8 @@ function Index() {
   const [aspectRatio, setAspectRatio] = useState<string>('');
 
   const [prompt, setPrompt] = useState<string>(''); // 组装完整的提示词
+
+  const config = Taro.getStorageSync('config');
 
   useEffect(() => {
     buildPrompt();
